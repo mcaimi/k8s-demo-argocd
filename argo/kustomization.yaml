@@ -10,3 +10,4 @@ commonLabels:
 resources:
   - project.yaml
   - backend-database.yaml
+  - application-frontend.yaml
