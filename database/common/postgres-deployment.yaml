@@ -13,7 +13,7 @@ spec:
       labels:
         app: postgres
     spec:
-      serviceAccount: ci-jenkins
+      serviceAccountName: ci-postgres
       automountServiceAccountToken: true
       containers:
       - image: docker.io/library/postgres:latest
