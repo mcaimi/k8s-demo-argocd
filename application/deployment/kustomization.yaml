@@ -36,5 +36,5 @@ secretGenerator:
   - flyway_baseline_on_migrate=true
 images:
 - name: java-runner
-  newName: image-registry.openshift-image-registry.svc:5000/dev/java-runner
+  newName: image-registry.openshift-image-registry.svc:5000/quarkus-notes/java-runner
   newTag: dev
