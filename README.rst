@@ -28,6 +28,7 @@ Once all pipelines finish their job, ArgoCD can be instructed to deploy the appl
 
 .. code:: bash
 
+  $ oc new-project quarkus-notes
   $ oc apply -k argo/
 
 Instructions on how to deploy ArgoCD on Openshift can be found in the ocp4-argocd_ repository
