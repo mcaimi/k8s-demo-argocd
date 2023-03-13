@@ -6,4 +6,5 @@ namespace: openshift-gitops
 resources:
   - argocd-namespace.yaml
   - argocd-admins-group.yaml
+  - argocd-clusterrole.yaml
   - argocd-instance.yaml
