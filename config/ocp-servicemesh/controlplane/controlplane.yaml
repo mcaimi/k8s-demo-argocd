@@ -12,7 +12,7 @@ spec:
     dataPlane:
       mtls: false
       automtls: false
-    manageNetworkPolicies: true
+    manageNetworkPolicy: true
   gateways:
     enabled: true
     ingress:
