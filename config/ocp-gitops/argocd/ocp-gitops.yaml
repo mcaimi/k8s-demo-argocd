@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: gitops-operator
-  namespace: openshift-gitops
+  namespace: openshift-operators
 spec:
   project: ocp-gitops
   source:
@@ -12,7 +12,7 @@ spec:
     path: config/ocp-gitops/operator
   destination:
     server: https://kubernetes.default.svc
-    namespace: openshift-gitops
+    namespace: openshift-operators
   syncPolicy:
     automated:
       prune: true
