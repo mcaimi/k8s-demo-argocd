@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: servicemesh-operator
+  namespace: openshift-gitops
+spec:
+  project: ocp-servicemesh
+  source:
+    repoURL: https://github.com/mcaimi/k8s-demo-argocd.git
+    targetRevision: master
+    path: config/ocp-servicemesh/operator
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

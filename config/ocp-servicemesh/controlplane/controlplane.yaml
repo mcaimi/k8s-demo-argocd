@@ -1,0 +1,45 @@
+---
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  namespace: istio-system
+  name: istio-ctlplane
+spec:
+  version: v2.3
+  security:
+    controlPlane:
+      mtls: false
+    dataPlane:
+      mtls: false
+      automtls: false
+    manageNetworkPolicies: true
+  gateways:
+    enabled: true
+    ingress:
+      sds:
+        enabled: true
+      routeConfig:
+        enabled: true
+      enabled: true
+      ingress: true
+    openshiftRoute:
+      enabled: true
+  tracing:
+    sampling: 10000
+    type: Jaeger
+  policy:
+    type: Istiod
+  addons:
+    grafana:
+      enabled: true
+    jaeger:
+      install:
+        storage:
+          type: Memory
+    kiali:
+      enabled: true
+    prometheus:
+      enabled: true
+  telemetry:
+    type: Istiod
+
