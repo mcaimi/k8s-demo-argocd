@@ -1,5 +1,0 @@
-resources:
-  - service-account.yaml
-  - postgres-volume.yaml
-  - postgres-service.yaml
-  - postgres-deployment.yaml
