@@ -13,5 +13,6 @@ commonLabels:
 resources:
   - namespace.yaml
   - kiali-subscription.yaml
+  - ossm-console.yaml
   - distributed-tracing-subscription.yaml
   - istio-subscription.yaml
