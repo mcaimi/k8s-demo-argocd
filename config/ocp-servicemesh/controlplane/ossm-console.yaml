@@ -1,0 +1,13 @@
+apiVersion: kiali.io/v1alpha1
+kind: OSSMConsole
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: ossmconsole
+  namespace: istio-system
+spec:
+  kiali:
+    serviceName: ''
+    serviceNamespace: ''
+    servicePort: 0
+    url: ''

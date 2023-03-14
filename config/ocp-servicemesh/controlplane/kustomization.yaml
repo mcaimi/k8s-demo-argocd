@@ -10,3 +10,4 @@ namespace: istio-system
 resources:
   - namespace.yaml
   - controlplane.yaml
+  - ossm-console.yaml
