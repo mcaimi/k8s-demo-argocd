@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  app: quarkus-notes
+  kind: application
+
+namespace: quarkus-notes
+
+resources:
+  - namespace.yaml
+  - permissions.yaml
+  - build-pvc.yaml
+  - tekton-triggers.yaml
+  - cleanup-workspace-task.yaml
+  - pipeline-resources.yaml
+  - quarkus-build-pipeline.yaml
+  - quarkus-build-task.yaml
+  - quarkus-maven-task.yaml

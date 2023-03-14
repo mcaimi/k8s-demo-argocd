@@ -1,0 +1,70 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: quarkus-notes-pipeline-template
+spec:
+  params:
+  - name: git-repo-url
+    description: The git repository url
+  - name: git-revision
+    description: The git revision
+    default: pipelines-1.4
+  - name: git-repo-name
+    description: The name of the deployment to be created / patched
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: quarkus-notes-pipelinerun-$(tt.params.git-repo-name)-
+    spec:
+      serviceAccountName: pipeline
+      pipelineRef:
+        name: container-build-pipeline
+      resources:
+      - name: k8s-demo-app-github-repo
+        resourceRef:
+          name: k8s-demo-app-github-repo-v2
+      - name: output-runnable-image
+        resourceRef:
+          name: istio-demo-app-frontend-image
+      params:
+        - name: deockefilePath
+          value: "src/main/docker"
+        - name: dockerTag
+          value: "v2"
+      workspaces:
+        - name: quarkus-maven-repo
+          persistentVolumeClaim:
+            claimName: build-pvc
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: quarkus-notes-pipeline-binding
+spec:
+  params:
+  - name: git-repo-url
+    value: $(body.repository.url)
+  - name: git-repo-name
+    value: $(body.repository.name)
+  - name: git-revision
+    value: $(body.head_commit.id)
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: quarkus-notes-trigger
+spec:
+  bindings:
+    - ref: quarkus-notes-pipeline-binding
+  template:
+    ref: quarkus-notes-pipeline-template
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: quarkus-notes-event-listener
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - triggerRef: quarkus-notes-trigger
