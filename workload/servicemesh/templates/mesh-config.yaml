@@ -1,0 +1,39 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ .Values.gateway_config.gateway_name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+{{- range .Values.gateway_config.servers }}
+    - port:
+        number: {{ .port.number }}
+        name: {{ .port.name }}
+        protocol: {{ .port.protocol }}
+      hosts:
+      {{- range .hosts }}
+      - {{ . | toString }}
+      {{ end }}
+{{- end }}
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: mtls-enable-policy
+  namespace: {{ .Values.namespace }}
+spec:
+  mtls:
+    mode: {{ .Values.mesh_config.peerAuthMode }}
+---
+apiVersion: maistra.io/v1
+kind: ServiceMeshMember
+metadata:
+  name: default
+  namespace: {{ .Values.namespace }}
+spec:
+  controlPlaneRef:
+    namespace: istio-system
+    name: istio-ctlplane

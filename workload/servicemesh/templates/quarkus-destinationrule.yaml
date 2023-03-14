@@ -1,0 +1,14 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ .Values.quarkus_app.destinationrule.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  host: {{ .Values.quarkus_app.destinationrule.host }}
+  trafficPolicy:
+    tls:
+      mode: {{ .Values.quarkus_app.destinationrule.tls_policy }}
+  subsets:
+{{- .Values.quarkus_app.destinationrule.subsets | toYaml | nindent 2}}
+

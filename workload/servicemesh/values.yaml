@@ -1,0 +1,91 @@
+
+namespace: quarkus-notes
+
+mesh_config:
+  peerAuthMode: STRICT
+
+gateway_config:
+  gateway_name: quarkus-demo-gateway
+  servers:
+  - hosts:
+    - quarkus-notes.apps.cluster-demo.sandbox1163.opentlc.com
+    port:
+      number: 80
+      protocol: HTTP
+      name: http
+
+postgres:
+  destinationrule:
+    name: postgres-app-destination-v1-community
+    host: postgres-app-destination-v1-community
+    tls_policy: ISTIO_MUTUAL
+  service:
+    name: postgres-app-vs
+    match_port: 5432
+    dest_port: 5432
+    weight: 100
+
+quarkus_app:
+  destinationrule:
+    name: quarkus-app-destination
+    host: frontend-java-runner-service-v2
+    tls_policy: ISTIO_MUTUAL
+    subsets:
+      - name: app-v2
+        labels:
+          version: v2
+  service:
+    name: quarkus-notes-vs
+    dest_port: 80
+    dest_subset: app-v2
+
+application_selectors:
+  frontend:
+    - key: app
+      value: k8s-quarkus-app
+    - key: version
+      value: v2
+  backend:
+    - key: app
+      value: k8s-postgres-app
+    - key: version
+      value: v1-community
+
+authz_rules:
+  frontend:
+    action: ALLOW
+    from:
+     - source:
+         namespaces: ["istio-system"]
+     - source:
+         principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+    to:
+     - operation:
+        methods: ["GET", "POST"]
+        paths: ["/notes/*"]
+     - operation:
+        methods: ["GET"]
+        paths: ["/", "*png", "*js"]
+  backend:
+    action: ALLOW
+    from:
+      - source:
+          principals:
+            - "cluster.local/ns/istio-demo/sa/frontend-java-runner-sa-v2"
+    to:
+     -  operation:
+          ports: ["5432"]
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: quarkus-notes-servicemesh
+description: Service Mesh Configuration Settings for the Quarkus Notes Demo Application
+type: application
+version: 0.1.0
+appVersion: "1.16.0"

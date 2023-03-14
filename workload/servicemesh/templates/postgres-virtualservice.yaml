@@ -1,0 +1,18 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.postgres.service.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  hosts:
+    - {{ .Values.postgres.destinationrule.host }}
+  tcp:
+  - match:
+    - port: {{ .Values.postgres.service.match_port }}
+    route:
+    - destination:
+        host: {{ .Values.postgres.destinationrule.host }}
+        port:
+          number: {{ .Values.postgres.service.dest_port }}
+      weight: {{ .Values.postgres.service.weight }}

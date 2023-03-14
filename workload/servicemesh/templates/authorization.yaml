@@ -1,0 +1,37 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: frontend-authz
+ namespace: {{ .Values.namespace }}
+spec:
+ selector:
+   matchLabels:
+  {{- range .Values.application_selectors.frontend }}
+    {{ .key | toString }}: {{ .value | toString }}
+  {{- end }}
+ action: {{ .Values.authz_rules.frontend.action }}
+ rules:
+ - from:
+{{- .Values.authz_rules.frontend.from | toYaml | nindent 4 }}
+   to:
+{{- .Values.authz_rules.frontend.to | toYaml | nindent 4 }}
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: postgres-authz
+ namespace: {{ .Values.namespace }}
+spec:
+ selector:
+   matchLabels:
+  {{- range .Values.application_selectors.backend }}
+    {{ .key | toString }}: {{ .value | toString }}
+  {{- end }}
+ action: {{ .Values.authz_rules.backend.action }}
+ rules:
+ - from:
+{{- .Values.authz_rules.backend.from | toYaml | nindent 4 }}
+   to:
+{{- .Values.authz_rules.backend.to | toYaml | nindent 4 }}

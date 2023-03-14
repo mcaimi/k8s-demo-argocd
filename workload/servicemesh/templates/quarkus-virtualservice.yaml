@@ -1,0 +1,19 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.quarkus_app.service.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  hosts:
+    - quarkus-notes.apps.cluster-demo.sandbox1163.opentlc.com
+  gateways:
+  - {{ .Values.gateway_config.gateway_name }}
+  http:
+  - name: "Frontend and API service"
+    route:
+    - destination:
+        host: {{ .Values.quarkus_app.destinationrule.host}}
+        subset: {{ .Values.quarkus_app.service.dest_subset }}
+        port:
+          number: {{ .Values.quarkus_app.service.dest_port }}
