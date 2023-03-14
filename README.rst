@@ -7,38 +7,54 @@ This demo uses:
 
 - Git as the source of truth for templates
 - ArgoCD as the deployment manager.
+- Quarkus as the application runtime for the demo app
+- PostgreSQL as a backend relational DB
+- ServiceMesh for security, observability
 
-Usage
------
+Deploy Operators
+----------------
 
-Follow instructions from this_ repository to setup a Kubernetes or Openshift cluster with all required components:
+Cluster configuration is performed in a GitOps native way. Relevant components are deployed as part of the application itself:
 
-- Jenkins and plugins
-- Sonatype Nexus
-- SonarQube 8
-
-Set up pipelines in the CI project to run and produce a binary runnable image:
-
-- Agents are built with buildconfigs on Openshift
-- Code artifacts are built with jenkins
-- Image signing is optional
-- Use of Nexus as a docker registry is mandatory
-
-Once all pipelines finish their job, ArgoCD can be instructed to deploy the application:
+- The Openshift GitOps Operator and ArgoCD Application Controller
+- The Openshift Pipelines Operator
+- The Openshift Service Mesh Operator and Control Plane instance
 
 .. code:: bash
 
-  $ oc new-project quarkus-notes
-  $ oc apply -k argo/
+  $ oc apply -k config/ocp-gitops/operator
 
-Instructions on how to deploy ArgoCD on Openshift can be found in the ocp4-argocd_ repository
+Once ArgoCD is up & running, let's  install the remaining dependencies
 
-TODO
-====
+.. code:: bash
 
-- Streamline the demo workflow
-- Fix all inevitable bugs
-- Write better documentation...
+  $ oc apply -k config/ocp-pipelines/argocd
+  $ oc apply -k config/ocp-servicemesh/argocd
 
-.. _this: https://github.com/mcaimi/k8s-demo-app.git
-.. _ocp4-argocd: https://github.com/mcaimi/ocp4-argocd.git
+At some point, the status of every application will converge to an healthy and synced state.
+
+Deploy Tekton Pipelines and Build the Application
+-------------------------------------------------
+
+The application lifecycle is managed through ArgoCD:
+
+- There is one folder that contains Tekton Build Pipelines and Pipeline Triggers used to build the runnable container image
+- Another folder contains the Quarkus Application deployment manifests
+- Servicemesh configuration is configured as a standalone ArgoCD Application as well as the backend DB.
+
+First step, deploy the CI Pipelines and frontend deployment manifests:
+
+.. code:: bash
+
+  $ oc apply -k application/quarkus-notes/
+
+At this point, the Backend Database deployment Application and Servicemesh Configuration Application can be created:
+
+.. code:: bash
+
+  $ oc apply -k application/postgres
+  $ oc apply -k application/servicemesh
+
+Lastly, the Quarkus App must be built. Either run the pipeline or configure a Git webhook that calls into the EventListener in tekton.
+
+.. _this: https://github.com/mcaimi/servicemesh-demo.git
