@@ -17,3 +17,4 @@ resources:
   - quarkus-build-pipeline.yaml
   - quarkus-build-task.yaml
   - quarkus-maven-task.yaml
+  - el-route.yaml

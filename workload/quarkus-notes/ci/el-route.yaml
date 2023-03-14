@@ -1,0 +1,20 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    app: quarkus-notes
+    app.kubernetes.io/instance: quarkus-notes-ci
+    app.kubernetes.io/managed-by: EventListener
+    app.kubernetes.io/part-of: Triggers
+    eventlistener: quarkus-notes-event-listener
+    kind: application
+  name: el-quarkus-notes-event-listener
+spec:
+  port:
+    targetPort: http-listener
+  to:
+    kind: Service
+    name: el-quarkus-notes-event-listener
+    weight: null

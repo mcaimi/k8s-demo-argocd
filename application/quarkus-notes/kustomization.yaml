@@ -9,4 +9,4 @@ commonLabels:
 
 resources:
   - project.yaml
-  - application.yaml
+  - ci.yaml
