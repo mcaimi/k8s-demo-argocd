@@ -10,3 +10,4 @@ commonLabels:
 resources:
   - project.yaml
   - ci.yaml
+  - deploy.yaml
