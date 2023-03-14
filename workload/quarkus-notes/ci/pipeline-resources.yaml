@@ -2,12 +2,12 @@
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: istio-demo-app-frontend-image
+  name: app-frontend-image
 spec:
   type: image
   params:
   - name: url
-    value: image-registry.openshift-image-registry.svc:5000/istio-demo/demo-app-frontend
+    value: image-registry.openshift-image-registry.svc:5000/quarkus-notes/demo-app-frontend
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
