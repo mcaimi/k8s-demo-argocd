@@ -57,4 +57,4 @@ At this point, the Backend Database deployment Application and Servicemesh Confi
 
 Lastly, the Quarkus App must be built. Either run the pipeline or configure a Git webhook that calls into the EventListener in tekton.
 
-.. _this: https://github.com/mcaimi/servicemesh-demo.git
+.. _this: https://github.com/mcaimi/quarkus-notes.git
