@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-broker
+  namespace: openshift-operators
+spec:
+  project: amq-streams
+  source:
+    repoURL: https://github.com/mcaimi/k8s-demo-argocd.git
+    targetRevision: master
+    path: config/amq-streams/broker
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-operators
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
