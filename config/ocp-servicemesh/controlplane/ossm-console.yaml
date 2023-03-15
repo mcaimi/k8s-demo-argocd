@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   name: ossmconsole
-  namespace: istio-system
+  namespace: openshift-operators
 spec:
   kiali:
     serviceName: ''
