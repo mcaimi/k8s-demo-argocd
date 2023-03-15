@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: quarkus-producer-ci
+  namespace: openshift-gitops
+spec:
+  project: quarkus-producer
+  source:
+    repoURL: https://github.com/mcaimi/kafka-event-producer-demo.git
+    targetRevision: native
+    path: tekton/
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
