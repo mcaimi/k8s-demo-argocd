@@ -63,7 +63,7 @@ authz_rules:
          principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
     to:
      - operation:
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
         paths: ["/notes/*"]
      - operation:
         methods: ["GET"]
