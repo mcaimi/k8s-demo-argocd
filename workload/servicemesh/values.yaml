@@ -1,14 +1,16 @@
-
 namespace: quarkus-notes
 
 mesh_config:
   peerAuthMode: STRICT
 
+ingress:
+  exposed_route: &exposedRoute quarkus-notes.apps.cluster-demo.sandbox1163.opentlc.com
+
 gateway_config:
   gateway_name: quarkus-demo-gateway
   servers:
   - hosts:
-    - quarkus-notes.apps.cluster-demo.sandbox1163.opentlc.com
+    - *exposedRoute
     port:
       number: 80
       protocol: HTTP
