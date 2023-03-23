@@ -61,6 +61,7 @@ spec:
   rbac:
     policy: |
       g, argocd-admins, role:admin
+      g, rbacsystem:cluster-admins, role:admin
       g, system:cluster-admins, role:admin
       g, cluster-admins, role:admin
     scopes: '[groups]'
