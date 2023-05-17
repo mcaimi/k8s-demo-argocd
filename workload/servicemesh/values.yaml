@@ -4,7 +4,7 @@ mesh_config:
   peerAuthMode: STRICT
 
 ingress:
-  exposed_route: &exposedRoute quarkus-notes.apps.cluster-demo.sandbox1163.opentlc.com
+  exposed_route: &exposedRoute quarkus-notes.apps.labcluster.sandbox1909.opentlc.com
 
 gateway_config:
   gateway_name: quarkus-demo-gateway

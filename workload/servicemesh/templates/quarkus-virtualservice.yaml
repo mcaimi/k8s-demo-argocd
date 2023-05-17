@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   hosts:
-    - quarkus-notes.apps.cluster-demo.sandbox1163.opentlc.com
+    - {{ .Values.ingress.exposed_route }}
   gateways:
   - {{ .Values.gateway_config.gateway_name }}
   http:
