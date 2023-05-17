@@ -4,5 +4,4 @@ kind: Kustomization
 namespace: open-cluster-management
 
 resources:
-  - namespace.yaml
   - multiclusterhub.yaml
