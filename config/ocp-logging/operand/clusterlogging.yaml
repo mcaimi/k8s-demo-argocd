@@ -8,7 +8,7 @@ spec:
     type: vector
   logStore:
     elasticsearch:
-      nodeCount: 1
+      nodeCount: 3
       redundancyPolicy: SingleRedundancy
       resources:
         requests:
