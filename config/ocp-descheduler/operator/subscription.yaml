@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: kube-descheduler
+  namespace: openshift-machine-api
+spec:
+  sourceNamespace: openshift-marketplace
+  source: redhat-operators
+  channel: stable
+  installPlanApproval: Automatic
+  name: cluster-kube-descheduler-operator
