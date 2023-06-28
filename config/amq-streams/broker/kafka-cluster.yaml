@@ -7,7 +7,7 @@ metadata:
   namespace: kafka-broker
 spec:
   kafka:
-    replicas: 1
+    replicas: 3
     listeners:
       - name: plain
         port: 9092
@@ -22,7 +22,7 @@ spec:
       default.replication.factor: 1
       min.insync.replicas: 1
   zookeeper:
-    replicas: 1
+    replicas: 3
     storage:
       type: ephemeral
   entityOperator:
