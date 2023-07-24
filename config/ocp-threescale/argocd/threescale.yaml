@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 3scale-operator
+  namespace: openshift-gitops
+spec:
+  project: ocp-threescale
+  source:
+    repoURL: https://github.com/mcaimi/k8s-demo-argocd.git
+    targetRevision: master
+    path: config/ocp-threescale/operator
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
