@@ -8,4 +8,3 @@ resources:
   - argocd-admins-group.yaml
   - argocd-clusterrole.yaml
   - argocd-instance.yaml
-  - argocd-rbac-cm.yaml
